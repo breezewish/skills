@@ -26,8 +26,14 @@ If you believe none of the above prompts are suitable, stop and ask the user for
 node scripts/review.js --cwd "<project directory>" "<review prompt>"
 ```
 
-The review script will start a new agent to do the review. It takes a lot of time to complete (e.g. > 30 minutes), so be patient, do not interrupt it unless you have a good reason to believe it's stuck (e.g. no progress for > 10 minutes). The review script is expected to progress updates.
+The review script will start a new agent to do the review. It takes a lot of time to complete (e.g. > 1 hour), so be patient, do not interrupt it.
 
 Note: `scripts/review.js` lives inside this skill's directory, instead of project directory.
 
-3. Report the progress and review results, keep text unchanged.
+3. Just report what script outputs, keep text unchanged. The script may output progress texts as the review goes.
+
+## Principles
+
+- Never do review by yourself. Always run the review script and just report the progress and results. If review script fails or stucks, report to user and ask for next steps.
+- Never regard script as stuck until it has no progress for > 30 minutes.
+- Never regard script as failed even if it outputs errors or fails. It will try to recover by itself. Script kills itself if it really fails.
