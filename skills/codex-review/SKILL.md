@@ -22,14 +22,12 @@ If you believe none of the above prompts are suitable, stop and ask the user for
 
 2. Run the review script:
 
-```
-node scripts/review.js --cwd "<current working directory>" "<review prompt>"
+```shell
+node scripts/review.js --cwd "<project directory>" "<review prompt>"
 ```
 
 The review script will start a new agent to do the review. It takes a lot of time to complete (e.g. > 30 minutes), so be patient, do not interrupt it unless you have a good reason to believe it's stuck (e.g. no progress for > 10 minutes). The review script is expected to progress updates.
 
+Note: `scripts/review.js` lives inside this skill's directory, instead of project directory.
+
 3. Report the progress and review results, keep text unchanged.
-
-## Available scripts
-
-- **`scripts/review.sh`** — The main script that runs the review process
