@@ -5,6 +5,49 @@ description: Run a code review using Codex CLI. Use when user asks for a code re
 
 # Review via Codex CLI
 
+This skill provides a _black-box_ review tool that utilizes LLM (Codex CLI) to do a code review, without relying on prior knowledge.
+
+## When to use this skill
+
+**This skill is extremely slow and expensive**, but provides high quality results, so you should only use it when:
+
+- User explicitly invokes $codex-review ( /codex-review )
+- As the final review phase after all work has been done
+- Reviewing something non-trivial or critical
+
+No need to use this skill for:
+
+- Small change (e.g. < 500 LOC)
+- Simple or trivial code
+- During the middle of work when code is changing rapidly
+- Check whether there are new issues when a previous review has just been done (unless the change is large enough)
+
+Keep in mind that this skill is based on LLMs, so:
+
+- it will not exhaustively report all issues in one run
+- it may report different issues in different runs
+- it may report false positives (rare but possible)
+
+You should always use your own judgment to evaluate the review results, and not blindly trust it.
+
+This skill is very expensive, you SHOULD NOT run it multiple times just to get more issues reported. SINGLE RUN IS ENOUGH to get most of the major issues.
+
+**Black-box review:**
+
+This skill only does black-box review (i.e. it only takes repository as input), there are pros and cons. Carefully consider whether it's suitable for your use case before using it.
+
+Pros:
+
+- Resistant to mistakes when user provides insufficient or wrong background information.
+- Possible to discover different issues compared as a white-box review.
+
+Cons:
+
+- Should not be used to check whether code changes meet specific requirements, as there is no way to tell it what requirements are, unless those requirements are documented in the codebase.
+- It may not discover hidden constraints that are not documented.
+
+IMPORTANT GUIDELINE: Always use this skill as a complementary tool, not the only tool, to provide a more comprehensive review.
+
 ## Workflow
 
 1. Assemble a review prompt.
