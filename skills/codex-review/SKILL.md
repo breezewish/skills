@@ -30,7 +30,9 @@ The review script will start a new agent to do the review. It takes a lot of tim
 
 Note: `scripts/review.js` lives inside this skill's directory, instead of project directory.
 
-3. Just report what script outputs, keep text unchanged. The script may output progress texts as the review goes.
+3. The script may output progress texts as the review goes. Just report what script outputs, including progress updates and results, keep text unchanged.
+
+To reduce round trips, you should poll script output at least every 5 minutes. Do not poll frequently.
 
 ## Principles
 

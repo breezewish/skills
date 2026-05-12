@@ -163,9 +163,9 @@ FORMATTING GUIDELINES:
 
 The finding description should be one paragraph.
 
-OTHER RULES TO FOLLOW:
+PRINCIPLES:
 
-- You are the final reviewer. Do not delegate your review work to another agent or skill, as you are the one to do review.
+- You are the final reviewer. You MUST NOT delegate your review work to another agent or skill like codex-review, as you are the one to do it.
 - Do not ask any questions, as the user is not present to answer them.
 
 ## My request for Codex:
