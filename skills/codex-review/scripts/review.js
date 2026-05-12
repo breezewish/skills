@@ -5,12 +5,12 @@ const path = require("node:path");
 const readline = require("node:readline");
 
 const USAGE = 'Usage: node review.js [--cwd <dir>] "<review-prompt>"';
+const OUTPUT_FLUSH_INTERVAL_MS = 2 * 60 * 1000;
 
 const { prompt, cwd } = parseArgs();
 const reviewPrompt = buildReviewPrompt();
 const server = spawn("codex", ["app-server"], {
   stdio: ["pipe", "pipe", "pipe"],
-  detached: true,
   cwd,
 });
 
@@ -28,6 +28,8 @@ const state = {
   shutdownTimer: null,
   wroteBlock: false,
   lastCommentary: null,
+  outputBuffer: [],
+  outputFlushTimer: null,
 };
 
 server.on("error", (err) => {
@@ -36,6 +38,7 @@ server.on("error", (err) => {
 });
 
 server.on("close", (code, signal) => {
+  flushOutput();
   clearTimer("shutdownTimer");
   clearTimer("interruptTimer");
   process.exitCode ??= typeof code === "number" ? code : signal ? 1 : 0;
@@ -43,11 +46,13 @@ server.on("close", (code, signal) => {
 
 process.on("SIGINT", () => {
   recordExitCode(1);
+  flushOutput();
   scheduleInterrupt();
 });
 
 process.on("SIGTERM", () => {
   recordExitCode(1);
+  flushOutput();
   shutdown(true);
 });
 
@@ -348,6 +353,18 @@ function scheduleInterrupt() {
   });
 }
 
+// buffer output and flush every X minutes, so that agents will not be frequently awaken up,
+// reduce token usage.
+function flushOutput() {
+  clearTimer("outputFlushTimer");
+  if (state.outputBuffer.length === 0) {
+    return;
+  }
+
+  process.stdout.write(state.outputBuffer.join(""));
+  state.outputBuffer = [];
+}
+
 function requestInterrupt() {
   if (
     !state.threadId ||
@@ -366,6 +383,7 @@ function requestInterrupt() {
 }
 
 function shutdown(resetTimer = false) {
+  flushOutput();
   clearTimer("interruptTimer");
   if (resetTimer) {
     clearTimer("shutdownTimer");
@@ -403,10 +421,23 @@ function recordExitCode(code) {
 
 function block(text) {
   if (state.wroteBlock) {
-    process.stdout.write("\n");
+    state.outputBuffer.push("\n");
   }
-  process.stdout.write(text.endsWith("\n") ? text : `${text}\n`);
+  state.outputBuffer.push(text.endsWith("\n") ? text : `${text}\n`);
   state.wroteBlock = true;
+  scheduleOutputFlush();
+}
+
+function scheduleOutputFlush() {
+  if (state.outputFlushTimer || state.outputBuffer.length === 0) {
+    return;
+  }
+
+  state.outputFlushTimer = setTimeout(() => {
+    state.outputFlushTimer = null;
+    flushOutput();
+  }, OUTPUT_FLUSH_INTERVAL_MS);
+  state.outputFlushTimer.unref();
 }
 
 function send(method, params, id) {

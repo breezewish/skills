@@ -26,7 +26,7 @@ If you believe none of the above prompts are suitable, stop and ask the user for
 node scripts/review.js --cwd "<project directory>" "<review prompt>"
 ```
 
-The review script will start a new agent to do the review. It takes a lot of time to complete (e.g. > 1 hour), so be patient, do not interrupt it.
+Review script will start a new agent to do the review. It takes a lot of time to complete (e.g. > 1 hour), so be patient, do not interrupt it.
 
 Note: `scripts/review.js` lives inside this skill's directory, instead of project directory.
 
