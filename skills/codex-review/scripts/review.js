@@ -160,10 +160,6 @@ The comments will be presented in the code review as inline comments. You should
 
 At the beginning of the finding title, tag the bug with priority level. For example "[P1] Un-padding slices along wrong tensor dimensions". [P0] – Drop everything to fix.  Blocking release, operations, or major usage. Only use for universal issues that do not depend on any assumptions about the inputs. · [P1] – Urgent. Should be addressed in the next cycle · [P2] – Normal. To be fixed eventually · [P3] – Low. Nice to have.
 
-At the end of your findings, output an "overall correctness" verdict of whether or not the patch should be considered "correct".
-Correct implies that existing code and tests will not break, and the patch is free of bugs and other blocking issues.
-Ignore non-blocking issues such as style, formatting, typos, documentation, and other nits.
-
 FORMATTING GUIDELINES:
 
 The finding description should be one paragraph.

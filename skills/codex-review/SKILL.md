@@ -20,19 +20,8 @@ No need to use this skill for:
 - Small change (e.g. < 500 LOC)
 - Simple or trivial code
 - During the middle of work when code is changing rapidly
-- Check whether there are new issues when a previous review has just been done (unless the change is large enough)
 
-Keep in mind that this skill is based on LLMs, so:
-
-- it will not exhaustively report all issues in one run
-- it may report different issues in different runs
-- it may report false positives (rare but possible)
-
-You should always use your own judgment to evaluate the review results, and not blindly trust it.
-
-This skill is very expensive, you SHOULD NOT run it multiple times just to get more issues reported. SINGLE RUN IS ENOUGH to get most of the major issues.
-
-**Black-box review:**
+**This is a black-box review:**
 
 This skill only does black-box review (i.e. it only takes repository as input), there are pros and cons. Carefully consider whether it's suitable for your use case before using it.
 
@@ -47,6 +36,19 @@ Cons:
 - It may not discover hidden constraints that are not documented.
 
 IMPORTANT GUIDELINE: Always use this skill as a complementary tool, not the only tool, to provide a more comprehensive review.
+
+**This skill is LLM based:**
+
+- it will not exhaustively report all issues in one run
+- it may report different issues in different runs
+- it may report false positives (rare but possible)
+
+You should always use your own judgment to evaluate the review results, and not blindly trust it.
+
+**This skill is very expensive:**
+
+- You SHOULD NOT run it multiple times just to get more issues reported. SINGLE RUN IS ENOUGH to get most of the major issues.
+- This skill is not a lint or check. NEVER run this skill just to check for new issues when a previous review has just been done (unless the change is large enough).
 
 ## Workflow
 
@@ -76,6 +78,15 @@ Note: `scripts/review.js` lives inside this skill's directory, instead of projec
 3. The script may output progress texts as the review goes. Just report what script outputs, including progress updates and results, keep text unchanged.
 
 To reduce round trips, you should poll script output at least every 5 minutes. Do not poll frequently.
+
+## Review Results
+
+Review script reports findings with these priority definitions:
+
+[P0] – Drop everything to fix. Blocking release, operations, or major usage.
+[P1] – Urgent. Should be addressed in the next cycle
+[P2] – Normal. To be fixed eventually
+[P3] – Low. Nice to have.
 
 ## Principles
 
