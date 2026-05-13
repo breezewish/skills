@@ -36,3 +36,9 @@ Example:
 ```
 $simplify commits in recent 2 days
 ```
+
+&nbsp;
+
+**[$grill-me](skills/grill-me/SKILL.md): A better [grill-me](https://www.aihero.dev/my-grill-me-skill-has-gone-viral)**
+
+It does not ask silly questions.
