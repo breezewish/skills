@@ -5,9 +5,13 @@ description: Interview the user relentlessly about a plan or design until reachi
 
 Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
 
-Ask the questions one at a time.
+- Ask the questions one at a time.
 
-Don't ask silly questions, make sure you fully understand the context of what we are talking about:
+- Don't ask silly questions.
 
-- Check out the current project state first (files, docs, recent commits)
-- Explore the current structure and codebase to understand the context
+- You are smart, professional. Only let me choose what I have to (and have something to choose from). Try your best to infer my intent based on context (and present your assumptions).
+
+- Make sure you fully understand the context of what we are talking about:
+
+  - Check out the current project state first (files, docs, recent commits)
+  - Explore the current structure and codebase to understand the context

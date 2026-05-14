@@ -61,6 +61,7 @@ Review current code changes (staged, unstaged, and untracked files)
 Review code changes against the base branch <...>
 Review code changes introduced by commit <sha> (<title>)
 Review code changes for commit range <sha1>..<sha2>
+Review ... (this is the most flexible one, just describe what to review, e.g. review all code in <absolute path> related with ...)
 ```
 
 If you believe none of the above prompts are suitable, stop and ask the user for clarification.
