@@ -42,3 +42,15 @@ $simplify commits in recent 2 days
 **[$grill-me](skills/grill-me/SKILL.md): A better [grill-me](https://www.aihero.dev/my-grill-me-skill-has-gone-viral)**
 
 It does not ask silly questions.
+
+&nbsp;
+
+(For Claude Code) **[/queue](skills/queue/SKILL.md): Run task after current task completes**
+
+This is very effective if you want to queue multiple things and want Claude Code to do it one by one.
+
+Example:
+
+```
+/queue Let's do something new, ....
+```
