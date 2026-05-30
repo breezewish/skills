@@ -47,6 +47,10 @@ It does not ask silly questions.
 
 (For Claude Code) **[/queue](skills/queue/SKILL.md): Run task after current task completes**
 
+```shell
+npx skills add -g breezewish/skills --skill queue --agent claude-code
+```
+
 This is very effective if you want to queue multiple things and want Claude Code to do it one by one.
 
 Example:
