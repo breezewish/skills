@@ -164,7 +164,7 @@ For each round:
 
 1. Start one `default` subagent if there is no live one.
 2. Send the exact Initial Prompt.
-3. Wait until the subagent finishes.
+3. Wait until the subagent finishes. It takes a lot of time to complete (e.g. > 1 hour), so be patient, do not interrupt it.
 4. Count one round.
 5. Report the exact last subagent message after removing only `::potter(...)` markers.
 6. If the message contains `::potter(exit)`, stop with state `complete`.
@@ -179,7 +179,7 @@ Reach Limit Prompt is only for wrap-up. It does not prove completion; final stat
 
 ## 3. Continue, Resume, Errors
 
-- Send `continue` only for a live subagent that paused, was interrupted, or hit a transient error.
+- Send `continue` only for a live subagent that paused, was interrupted, or hit a transient error (using interrupt == false).
 - Auto retry by sending `continue` if subagent meets errors. Retry `continue` up to 5 consecutive times.
 - If retries fail and rounds remain, start a fresh subagent with the exact Initial Prompt.
 - If a subagent cannot be started or prompted after retries, stop with `error`.
