@@ -3,13 +3,13 @@ name: code-review
 description: "Review the current diff, or a PR number/branch/path target, for correctness bugs and reuse/simplification/efficiency cleanups. Pass --fix to apply the findings to the working tree after the review"
 ---
 
-`5+5 angles × 8 candidates → 1-vote verify → sweep → ≤15 findings`
+`5+5 angles × 8 candidates → sweep → ≤15 findings`
 
 You are reviewing for **recall** at extra-high effort: catch every real bug. At
 this level, catching real bugs matters more than avoiding false positives — a
 missed bug ships. Err on the side of surfacing.
 
-All subagents mentioned below in this skill, including finders, verifiers, etc,
+All subagents mentioned below in this skill, including finders, etc,
 should be started without inheriting your conversation (e.g. fork_turns: none in Codex).
 Subagents takes long time to finish, wait patiently (prefer > 10 minutes).
 
@@ -118,24 +118,10 @@ cost (what is duplicated, wasted, harder to maintain, or which AGENTS.md rule
 is broken) instead of a crash. Correctness bugs always outrank cleanup,
 altitude, and conventions findings when the output cap forces a cut.
 
-## Phase 2 — Verify (1-vote, 3-state)
+## Phase 2 — Dedup and self-check (no subagent verify)
 
-Dedup candidates that point at the same line/mechanism, keeping the one with
-the most concrete failure scenario. For each remaining candidate, run **one
-verifier** via the Agent tool: give it the diff, the relevant
-file(s), and the candidate, and have it return exactly one of:
-
-- **CONFIRMED** — can name the inputs/state that trigger it and the wrong
-  output or crash. Quote the line.
-- **PLAUSIBLE** — mechanism is real, trigger is uncertain (timing, env,
-  config). State what would confirm it.
-- **REFUTED** — factually wrong (code doesn't say that) or guarded elsewhere.
-  Quote the line that proves it.
-
-Keep candidates where the vote is CONFIRMED or PLAUSIBLE.
-
-This is recall mode — a single non-REFUTED vote carries the finding. Do NOT
-drop on uncertainty.
+Dedup near-duplicates (same defect, same location, same reason → keep one).
+Re-check each remaining candidate yourself against the diff before keeping it.
 
 ## Phase 3 — Sweep for gaps
 
