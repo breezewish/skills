@@ -138,23 +138,18 @@ the list. If nothing new, return an empty sweep — do not pad.
 
 ## Output
 
-Return findings as a JSON array of at most 15 objects:
+When you call out an issue, include the relevant file and line or function in prose, explain the scenario where it matters, and keep the explanation concise.
+At the beginning of the finding title, tag the bug with priority level. For example "[P1] Un-padding slices along wrong tensor dimensions".
+[P0] – Drop everything to fix.  Blocking release, operations, or major usage. Only use for universal issues that do not depend on any assumptions about the inputs.
+[P1] – Urgent. Should be addressed in the next cycle
+[P2] – Normal. To be fixed eventually
+[P3] – Low. Nice to have.
 
-```json
-[
-  {
-    "file": "path/to/file.ext",
-    "line": 123,
-    "summary": "one-sentence statement of the bug",
-    "failure_scenario": "concrete inputs/state → wrong output/crash"
-  }
-]
-```
+If there are no actionable issues, say that directly and briefly.
 
 Ranked most-severe first. If more than 15 survive, keep the 15 most
-severe. If nothing survives verification, return `[]`. Do not call the
-ReportFindings tool even if it is available - this review's
-output contract is the JSON block above.
+severe. Do not call the ReportFindings tool even if it is available - this review's
+output contract is the human-readable text above.
 
 ## Phase 4 - Fix (if --fix flag was passed)
 
